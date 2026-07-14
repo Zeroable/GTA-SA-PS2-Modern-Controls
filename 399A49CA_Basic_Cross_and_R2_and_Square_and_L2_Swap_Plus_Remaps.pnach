@@ -1,0 +1,459 @@
+gametitle=Grand Theft Auto: San Andreas (NTSC-U SLUS-20946 / CRC 399A49CA)
+comment=Modular modern controls patch for PCSX2.
+comment=Enable group 1 first. Optional modules can be toggled during play; leave group 1 enabled while the game is running.
+comment=Group 2 is the universal in-vehicle D-pad/look/radio module.
+comment=Choose only one alternate car/motorcycle/normal-vehicle module: group 5 OR group 6. If both are enabled, group 6 Auto Fire wins.
+comment=Rhino tank model 432 is included in group 2, but excluded from the alternate car/motorcycle modules.
+comment=Target: original NTSC-U SLUS-209.46, CRC 399A49CA.
+comment=Public credit: Zeroable.
+
+[Cheats\1 REQUIRED - Basic vehicle swap core]
+description=Required core. On foot stays stock unless group 7 is enabled. In vehicles, installs the controller hook and applies the basic R2/Cross and L2/Square vehicle swap. Optional groups depend on this being enabled.
+author=Zeroable + PS2 Controller Remapper by pelvicthrustman + ChatGPT assembly/debugging
+
+// Shared hook entry from PS2 Controller Remapper.
+patch=1,EE,200FD050,extended,00C0C821
+patch=1,EE,200FD054,extended,0814C975
+patch=1,EE,200FD058,extended,24030070
+
+// Normal vehicle body. Full swap: R2 <-> Cross and L2 <-> Square. Ends at FD900 postprocessor.
+patch=1,EE,200FD05C,extended,87240002
+patch=1,EE,200FD060,extended,30853CFF
+patch=1,EE,200FD064,extended,93260012
+patch=1,EE,200FD068,extended,93270013
+patch=1,EE,200FD06C,extended,9328000F
+patch=1,EE,200FD070,extended,9329000E
+patch=1,EE,200FD074,extended,30810100
+patch=1,EE,200FD078,extended,34A38000
+patch=1,EE,200FD07C,extended,0061280B
+patch=1,EE,200FD080,extended,A326000F
+patch=1,EE,200FD084,extended,30810200
+patch=1,EE,200FD088,extended,34A34000
+patch=1,EE,200FD08C,extended,0061280B
+patch=1,EE,200FD090,extended,A327000E
+patch=1,EE,200FD094,extended,30818000
+patch=1,EE,200FD098,extended,34A30100
+patch=1,EE,200FD09C,extended,0061280B
+patch=1,EE,200FD0A0,extended,A3280012
+patch=1,EE,200FD0A4,extended,30814000
+patch=1,EE,200FD0A8,extended,34A30200
+patch=1,EE,200FD0AC,extended,0061280B
+patch=1,EE,200FD0B0,extended,A3290013
+patch=1,EE,200FD0B4,extended,0803F640
+patch=1,EE,200FD0B8,extended,A7250002
+
+// Modular chooser stage 1. Core default: continue to stage 2. Bicycle add-on overwrites this block.
+patch=1,EE,200FD120,extended,0803F45C
+patch=1,EE,200FD124,extended,00000000
+
+// Modular chooser stage 2. Core default: continue to stage 3. Aircraft add-on overwrites this block.
+patch=1,EE,200FD170,extended,0803F4B0
+patch=1,EE,200FD174,extended,00000000
+
+// Modular chooser stage 3. Core default: normal vehicle body. Alternate car/motorcycle add-ons overwrite this block.
+patch=1,EE,200FD2C0,extended,0803F417
+patch=1,EE,200FD2C4,extended,00000000
+
+// Default postprocessor at FD900. Core behavior: return immediately. Group 2 overwrites this.
+patch=1,EE,200FD900,extended,03E00008
+patch=1,EE,200FD904,extended,00000000
+
+// Dynamic hook install/restore.
+patch=1,EE,D066BB4A,extended,02100000
+patch=1,EE,205325CC,extended,0803F414
+patch=1,EE,20532674,extended,0803F448
+
+patch=1,EE,D066BB4A,extended,02000000
+patch=1,EE,205325CC,extended,24030070
+patch=1,EE,20532674,extended,03E00008
+
+[Cheats\2 OPTIONAL - Universal in-vehicle D-pad radio/look controls]
+description=Requires group 1. All vehicles including Rhino: D-pad Up=next radio station/native D-pad Down, D-pad Left=look left/native L2, D-pad Right=look right/native R2, D-pad Down=look back/native L2+R2. This single module controls the in-vehicle D-pad/look/radio behavior.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Universal in-vehicle D-pad/look/radio postprocessor.
+patch=1,EE,200FD900,extended,87240002
+patch=1,EE,200FD904,extended,348500F0
+patch=1,EE,200FD908,extended,9326000A
+patch=1,EE,200FD90C,extended,93270009
+patch=1,EE,200FD910,extended,93280008
+patch=1,EE,200FD914,extended,9329000B
+patch=1,EE,200FD918,extended,240A0000
+patch=1,EE,200FD91C,extended,932B0012
+patch=1,EE,200FD920,extended,932C0013
+patch=1,EE,200FD924,extended,240D0000
+patch=1,EE,200FD928,extended,30810010
+patch=1,EE,200FD92C,extended,30A3FFBF
+patch=1,EE,200FD930,extended,0061280A
+patch=1,EE,200FD934,extended,00C1500A
+patch=1,EE,200FD938,extended,30810080
+patch=1,EE,200FD93C,extended,30A3FEFF
+patch=1,EE,200FD940,extended,0061280A
+patch=1,EE,200FD944,extended,00E1580A
+patch=1,EE,200FD948,extended,30810020
+patch=1,EE,200FD94C,extended,30A3FDFF
+patch=1,EE,200FD950,extended,0061280A
+patch=1,EE,200FD954,extended,0101600A
+patch=1,EE,200FD958,extended,30810040
+patch=1,EE,200FD95C,extended,30A3FCFF
+patch=1,EE,200FD960,extended,0061280A
+patch=1,EE,200FD964,extended,0121580A
+patch=1,EE,200FD968,extended,0121600A
+patch=1,EE,200FD96C,extended,A32D0008
+patch=1,EE,200FD970,extended,A32D0009
+patch=1,EE,200FD974,extended,A32D000A
+patch=1,EE,200FD978,extended,A32A000B
+patch=1,EE,200FD97C,extended,A32B0012
+patch=1,EE,200FD980,extended,A32C0013
+patch=1,EE,200FD984,extended,03E00008
+patch=1,EE,200FD988,extended,A7250002
+
+[Cheats\3 OPTIONAL - Bicycle special controls]
+description=Requires group 1. BMX/Bike/Mountain Bike only: R2 mirrors Cross, L2 mirrors Square, Cross/Square still work. D-pad look/radio functions are not included here; enable group 2 for those.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Bicycle stage-1 chooser. Bike IDs: 481 BMX, 509 Bike, 510 Mountain Bike. If not a bike, continue to stage 2.
+patch=1,EE,200FD120,extended,3C080067
+patch=1,EE,200FD124,extended,8D08BB48
+patch=1,EE,200FD128,extended,85090022
+patch=1,EE,200FD12C,extended,240A01E1
+patch=1,EE,200FD130,extended,112A0073
+patch=1,EE,200FD134,extended,00000000
+patch=1,EE,200FD138,extended,240A01FD
+patch=1,EE,200FD13C,extended,112A0070
+patch=1,EE,200FD140,extended,00000000
+patch=1,EE,200FD144,extended,240A01FE
+patch=1,EE,200FD148,extended,112A006D
+patch=1,EE,200FD14C,extended,00000000
+patch=1,EE,200FD150,extended,0803F45C
+patch=1,EE,200FD154,extended,00000000
+
+// Bicycle-special body, no D-pad behavior.
+patch=1,EE,200FD300,extended,87240002
+patch=1,EE,200FD304,extended,34850300
+patch=1,EE,200FD308,extended,93260012
+patch=1,EE,200FD30C,extended,93270013
+patch=1,EE,200FD310,extended,9328000F
+patch=1,EE,200FD314,extended,9329000E
+patch=1,EE,200FD318,extended,240A0000
+patch=1,EE,200FD31C,extended,240B0000
+patch=1,EE,200FD320,extended,30810200
+patch=1,EE,200FD324,extended,30A3BFFF
+patch=1,EE,200FD328,extended,0061280A
+patch=1,EE,200FD32C,extended,00E1480A
+patch=1,EE,200FD330,extended,30810100
+patch=1,EE,200FD334,extended,30A37FFF
+patch=1,EE,200FD338,extended,0061280A
+patch=1,EE,200FD33C,extended,00C1400A
+patch=1,EE,200FD340,extended,A329000E
+patch=1,EE,200FD344,extended,A328000F
+patch=1,EE,200FD348,extended,A32A0012
+patch=1,EE,200FD34C,extended,A32B0013
+patch=1,EE,200FD350,extended,0803F640
+patch=1,EE,200FD354,extended,A7250002
+
+[Cheats\4 OPTIONAL - Aircraft special controls]
+description=Requires group 1. Aircraft only: native L1->Square, native R1->Cross, native Cross->R2, native Square->L2, native R2->R1, native L2->L1. Avoids v0 clobber. Enable group 2 separately for D-pad look/radio.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Aircraft stage-2 chooser. If not aircraft, continue to stage 3.
+patch=1,EE,200FD170,extended,3C080067
+patch=1,EE,200FD174,extended,8D08BB48
+patch=1,EE,200FD178,extended,85090022
+patch=1,EE,200FD17C,extended,240A01A9
+patch=1,EE,200FD180,extended,112A009F
+patch=1,EE,200FD184,extended,00000000
+patch=1,EE,200FD188,extended,240A01BF
+patch=1,EE,200FD18C,extended,112A009C
+patch=1,EE,200FD190,extended,00000000
+patch=1,EE,200FD194,extended,240A01CC
+patch=1,EE,200FD198,extended,112A0099
+patch=1,EE,200FD19C,extended,00000000
+patch=1,EE,200FD1A0,extended,240A01D0
+patch=1,EE,200FD1A4,extended,112A0096
+patch=1,EE,200FD1A8,extended,00000000
+patch=1,EE,200FD1AC,extended,240A01D1
+patch=1,EE,200FD1B0,extended,112A0093
+patch=1,EE,200FD1B4,extended,00000000
+patch=1,EE,200FD1B8,extended,240A01D5
+patch=1,EE,200FD1BC,extended,112A0090
+patch=1,EE,200FD1C0,extended,00000000
+patch=1,EE,200FD1C4,extended,240A01DC
+patch=1,EE,200FD1C8,extended,112A008D
+patch=1,EE,200FD1CC,extended,00000000
+patch=1,EE,200FD1D0,extended,240A01E7
+patch=1,EE,200FD1D4,extended,112A008A
+patch=1,EE,200FD1D8,extended,00000000
+patch=1,EE,200FD1DC,extended,240A01E8
+patch=1,EE,200FD1E0,extended,112A0087
+patch=1,EE,200FD1E4,extended,00000000
+patch=1,EE,200FD1E8,extended,240A01F1
+patch=1,EE,200FD1EC,extended,112A0084
+patch=1,EE,200FD1F0,extended,00000000
+patch=1,EE,200FD1F4,extended,240A01F5
+patch=1,EE,200FD1F8,extended,112A0081
+patch=1,EE,200FD1FC,extended,00000000
+patch=1,EE,200FD200,extended,240A01FF
+patch=1,EE,200FD204,extended,112A007E
+patch=1,EE,200FD208,extended,00000000
+patch=1,EE,200FD20C,extended,240A0200
+patch=1,EE,200FD210,extended,112A007B
+patch=1,EE,200FD214,extended,00000000
+patch=1,EE,200FD218,extended,240A0201
+patch=1,EE,200FD21C,extended,112A0078
+patch=1,EE,200FD220,extended,00000000
+patch=1,EE,200FD224,extended,240A0207
+patch=1,EE,200FD228,extended,112A0075
+patch=1,EE,200FD22C,extended,00000000
+patch=1,EE,200FD230,extended,240A0208
+patch=1,EE,200FD234,extended,112A0072
+patch=1,EE,200FD238,extended,00000000
+patch=1,EE,200FD23C,extended,240A0224
+patch=1,EE,200FD240,extended,112A006F
+patch=1,EE,200FD244,extended,00000000
+patch=1,EE,200FD248,extended,240A0229
+patch=1,EE,200FD24C,extended,112A006C
+patch=1,EE,200FD250,extended,00000000
+patch=1,EE,200FD254,extended,240A0233
+patch=1,EE,200FD258,extended,112A0069
+patch=1,EE,200FD25C,extended,00000000
+patch=1,EE,200FD260,extended,240A0241
+patch=1,EE,200FD264,extended,112A0066
+patch=1,EE,200FD268,extended,00000000
+patch=1,EE,200FD26C,extended,240A0250
+patch=1,EE,200FD270,extended,112A0063
+patch=1,EE,200FD274,extended,00000000
+patch=1,EE,200FD278,extended,240A0251
+patch=1,EE,200FD27C,extended,112A0060
+patch=1,EE,200FD280,extended,00000000
+patch=1,EE,200FD284,extended,0803F4B0
+patch=1,EE,200FD288,extended,00000000
+
+// Aircraft-special body.
+patch=1,EE,200FD400,extended,87240002
+patch=1,EE,200FD404,extended,3485CF00
+patch=1,EE,200FD408,extended,93260012
+patch=1,EE,200FD40C,extended,93270013
+patch=1,EE,200FD410,extended,93280010
+patch=1,EE,200FD414,extended,93290011
+patch=1,EE,200FD418,extended,932A000E
+patch=1,EE,200FD41C,extended,932B000F
+patch=1,EE,200FD420,extended,240C0000
+patch=1,EE,200FD424,extended,240D0000
+patch=1,EE,200FD428,extended,240E0000
+patch=1,EE,200FD42C,extended,240F0000
+patch=1,EE,200FD430,extended,30810200
+patch=1,EE,200FD434,extended,30A3BFFF
+patch=1,EE,200FD438,extended,0061280A
+patch=1,EE,200FD43C,extended,00E1600A
+patch=1,EE,200FD440,extended,30810100
+patch=1,EE,200FD444,extended,30A37FFF
+patch=1,EE,200FD448,extended,0061280A
+patch=1,EE,200FD44C,extended,00C1680A
+patch=1,EE,200FD450,extended,30818000
+patch=1,EE,200FD454,extended,30A3FBFF
+patch=1,EE,200FD458,extended,0061280A
+patch=1,EE,200FD45C,extended,0161700A
+patch=1,EE,200FD460,extended,30814000
+patch=1,EE,200FD464,extended,30A3F7FF
+patch=1,EE,200FD468,extended,0061280A
+patch=1,EE,200FD46C,extended,0141780A
+patch=1,EE,200FD470,extended,24060000
+patch=1,EE,200FD474,extended,24070000
+patch=1,EE,200FD478,extended,30810400
+patch=1,EE,200FD47C,extended,30A3FEFF
+patch=1,EE,200FD480,extended,0061280A
+patch=1,EE,200FD484,extended,0101300A
+patch=1,EE,200FD488,extended,30810800
+patch=1,EE,200FD48C,extended,30A3FDFF
+patch=1,EE,200FD490,extended,0061280A
+patch=1,EE,200FD494,extended,0121380A
+patch=1,EE,200FD498,extended,A32C000E
+patch=1,EE,200FD49C,extended,A32D000F
+patch=1,EE,200FD4A0,extended,A32E0010
+patch=1,EE,200FD4A4,extended,A32F0011
+patch=1,EE,200FD4A8,extended,A3260012
+patch=1,EE,200FD4AC,extended,A3270013
+patch=1,EE,200FD4B0,extended,0803F640
+patch=1,EE,200FD4B4,extended,A7250002
+
+[Cheats\5 OPTIONAL - Alternate car/motorcycle controls - No Auto Fire]
+description=Requires group 1. Choose this OR group 6, not both. Cars, motorcycles, boats, and other non-bike/non-aircraft/non-Rhino vehicles use: native L1->Square, native R1->Cross, native Cross->R2, native Square->L2, native R2->R1, native L2->L1. Enable group 2 separately for D-pad look/radio.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Stage-3 chooser for no-auto-fire alternate normal vehicles. Rhino tank model 432 is sent to the basic normal vehicle body.
+patch=1,EE,200FD2C0,extended,3C080067
+patch=1,EE,200FD2C4,extended,8D08BB48
+patch=1,EE,200FD2C8,extended,85090022
+patch=1,EE,200FD2CC,extended,240A01B0
+patch=1,EE,200FD2D0,extended,112AFF62
+patch=1,EE,200FD2D4,extended,00000000
+patch=1,EE,200FD2D8,extended,0803F540
+patch=1,EE,200FD2DC,extended,00000000
+
+// Alternate car/motorcycle/normal vehicle body: no auto fire, no D-pad behavior.
+patch=1,EE,200FD500,extended,87240002
+patch=1,EE,200FD504,extended,3485CF00
+patch=1,EE,200FD508,extended,93260012
+patch=1,EE,200FD50C,extended,93270013
+patch=1,EE,200FD510,extended,93280010
+patch=1,EE,200FD514,extended,93290011
+patch=1,EE,200FD518,extended,932A000E
+patch=1,EE,200FD51C,extended,932B000F
+patch=1,EE,200FD520,extended,240C0000
+patch=1,EE,200FD524,extended,240D0000
+patch=1,EE,200FD528,extended,240E0000
+patch=1,EE,200FD52C,extended,240F0000
+patch=1,EE,200FD530,extended,30810200
+patch=1,EE,200FD534,extended,30A3BFFF
+patch=1,EE,200FD538,extended,0061280A
+patch=1,EE,200FD53C,extended,00E1600A
+patch=1,EE,200FD540,extended,30810100
+patch=1,EE,200FD544,extended,30A37FFF
+patch=1,EE,200FD548,extended,0061280A
+patch=1,EE,200FD54C,extended,00C1680A
+patch=1,EE,200FD550,extended,30818000
+patch=1,EE,200FD554,extended,30A3FBFF
+patch=1,EE,200FD558,extended,0061280A
+patch=1,EE,200FD55C,extended,0161700A
+patch=1,EE,200FD560,extended,30814000
+patch=1,EE,200FD564,extended,30A3F7FF
+patch=1,EE,200FD568,extended,0061280A
+patch=1,EE,200FD56C,extended,0141780A
+patch=1,EE,200FD570,extended,24060000
+patch=1,EE,200FD574,extended,24070000
+patch=1,EE,200FD578,extended,30810400
+patch=1,EE,200FD57C,extended,30A3FEFF
+patch=1,EE,200FD580,extended,0061280A
+patch=1,EE,200FD584,extended,0101300A
+patch=1,EE,200FD588,extended,30810800
+patch=1,EE,200FD58C,extended,30A3FDFF
+patch=1,EE,200FD590,extended,0061280A
+patch=1,EE,200FD594,extended,0121380A
+patch=1,EE,200FD598,extended,A32C000E
+patch=1,EE,200FD59C,extended,A32D000F
+patch=1,EE,200FD5A0,extended,A32E0010
+patch=1,EE,200FD5A4,extended,A32F0011
+patch=1,EE,200FD5A8,extended,A3260012
+patch=1,EE,200FD5AC,extended,A3270013
+patch=1,EE,200FD5B0,extended,0803F640
+patch=1,EE,200FD5B4,extended,A7250002
+
+[Cheats\6 OPTIONAL - Alternate car/motorcycle controls - With Auto Fire]
+description=Requires group 1. Choose this OR group 5, not both. Same alternate car/motorcycle layout as group 5, but R1 also presses native R2+Circle and L1 also presses native L2+Circle. Rhino excluded. Enable group 2 separately for D-pad look/radio.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Stage-3 chooser for auto-fire alternate normal vehicles. Rhino tank model 432 is sent to the basic normal vehicle body. If groups 5 and 6 are both enabled, this later group wins.
+patch=1,EE,200FD2C0,extended,3C080067
+patch=1,EE,200FD2C4,extended,8D08BB48
+patch=1,EE,200FD2C8,extended,85090022
+patch=1,EE,200FD2CC,extended,240A01B0
+patch=1,EE,200FD2D0,extended,112AFF62
+patch=1,EE,200FD2D4,extended,00000000
+patch=1,EE,200FD2D8,extended,0803F580
+patch=1,EE,200FD2DC,extended,00000000
+
+// Alternate car/motorcycle/normal vehicle body: with auto fire, no D-pad behavior.
+// Physical behavior: Square->native L1, Cross->native R1, R2->native Cross, L2->native Square, R1->native R2+Circle, L1->native L2+Circle.
+patch=1,EE,200FD600,extended,87240002
+patch=1,EE,200FD604,extended,3485CF00
+patch=1,EE,200FD608,extended,93260012
+patch=1,EE,200FD60C,extended,93270013
+patch=1,EE,200FD610,extended,93280010
+patch=1,EE,200FD614,extended,93290011
+patch=1,EE,200FD618,extended,932A000E
+patch=1,EE,200FD61C,extended,932B000F
+patch=1,EE,200FD620,extended,932C000D
+patch=1,EE,200FD624,extended,240D0000
+patch=1,EE,200FD628,extended,240E0000
+patch=1,EE,200FD62C,extended,240F0000
+patch=1,EE,200FD630,extended,30810200
+patch=1,EE,200FD634,extended,30A3BFFF
+patch=1,EE,200FD638,extended,0061280A
+patch=1,EE,200FD63C,extended,00E1680A
+patch=1,EE,200FD640,extended,30810100
+patch=1,EE,200FD644,extended,30A37FFF
+patch=1,EE,200FD648,extended,0061280A
+patch=1,EE,200FD64C,extended,00C1700A
+patch=1,EE,200FD650,extended,30818000
+patch=1,EE,200FD654,extended,30A3FBFF
+patch=1,EE,200FD658,extended,0061280A
+patch=1,EE,200FD65C,extended,0161780A
+patch=1,EE,200FD660,extended,24060000
+patch=1,EE,200FD664,extended,30814000
+patch=1,EE,200FD668,extended,30A3F7FF
+patch=1,EE,200FD66C,extended,0061280A
+patch=1,EE,200FD670,extended,0141300A
+patch=1,EE,200FD674,extended,24070000
+patch=1,EE,200FD678,extended,240A0000
+patch=1,EE,200FD67C,extended,30810400
+patch=1,EE,200FD680,extended,30A3DEFF
+patch=1,EE,200FD684,extended,0061280A
+patch=1,EE,200FD688,extended,0101380A
+patch=1,EE,200FD68C,extended,0101600A
+patch=1,EE,200FD690,extended,30810800
+patch=1,EE,200FD694,extended,30A3DDFF
+patch=1,EE,200FD698,extended,0061280A
+patch=1,EE,200FD69C,extended,0121500A
+patch=1,EE,200FD6A0,extended,0121600A
+patch=1,EE,200FD6A4,extended,A32C000D
+patch=1,EE,200FD6A8,extended,A32D000E
+patch=1,EE,200FD6AC,extended,A32E000F
+patch=1,EE,200FD6B0,extended,A32F0010
+patch=1,EE,200FD6B4,extended,A3260011
+patch=1,EE,200FD6B8,extended,A3270012
+patch=1,EE,200FD6BC,extended,A32A0013
+patch=1,EE,200FD6C0,extended,0803F640
+patch=1,EE,200FD6C4,extended,A7250002
+
+[Cheats\7 OPTIONAL - On-foot weapon/respond swap]
+description=Requires group 1. On foot only. Removes the old D-pad remaps. Shoulder swap: physical L1 outputs native L2; physical R1 outputs native R2; physical L2 outputs native L1; physical R2 outputs native R1.
+author=Zeroable + ChatGPT assembly/debugging
+
+// ON FOOT OVERRIDE.
+// Group 1 restores stock controls on foot. This optional group overrides that restore
+// and keeps the controller hook active while on foot, then points the second hook
+// to the on-foot body below.
+patch=1,EE,D066BB4A,extended,02000000
+patch=1,EE,205325CC,extended,0803F414
+patch=1,EE,20532674,extended,0803F600
+
+// On-foot body.
+// Physical behavior:
+//   physical L1 -> native L2
+//   physical R1 -> native R2
+//   physical L2 -> native L1
+//   physical R2 -> native R1
+patch=1,EE,200FD800,extended,87240002
+patch=1,EE,200FD804,extended,34850F00
+patch=1,EE,200FD808,extended,93260010
+patch=1,EE,200FD80C,extended,93270011
+patch=1,EE,200FD810,extended,93280012
+patch=1,EE,200FD814,extended,93290013
+patch=1,EE,200FD818,extended,240A0000
+patch=1,EE,200FD81C,extended,240B0000
+patch=1,EE,200FD820,extended,240C0000
+patch=1,EE,200FD824,extended,240D0000
+patch=1,EE,200FD828,extended,30810400
+patch=1,EE,200FD82C,extended,30A3FEFF
+patch=1,EE,200FD830,extended,0061280A
+patch=1,EE,200FD834,extended,00C1600A
+patch=1,EE,200FD838,extended,30810800
+patch=1,EE,200FD83C,extended,30A3FDFF
+patch=1,EE,200FD840,extended,0061280A
+patch=1,EE,200FD844,extended,00E1680A
+patch=1,EE,200FD848,extended,30810100
+patch=1,EE,200FD84C,extended,30A3FBFF
+patch=1,EE,200FD850,extended,0061280A
+patch=1,EE,200FD854,extended,0101500A
+patch=1,EE,200FD858,extended,30810200
+patch=1,EE,200FD85C,extended,30A3F7FF
+patch=1,EE,200FD860,extended,0061280A
+patch=1,EE,200FD864,extended,0121580A
+patch=1,EE,200FD868,extended,A32A0010
+patch=1,EE,200FD86C,extended,A32B0011
+patch=1,EE,200FD870,extended,A32C0012
+patch=1,EE,200FD874,extended,A32D0013
+patch=1,EE,200FD878,extended,03E00008
+patch=1,EE,200FD87C,extended,A7250002
+
