@@ -4,6 +4,14 @@ A PCSX2 `.pnach` controls patch for **Grand Theft Auto: San Andreas** on PlaySta
 
 This patch modernizes the PS2 control layout by remapping vehicle acceleration/braking and several context-specific controls while keeping the original game ISO untouched.
 
+## Why This Patch Exists
+
+The original PS2 version of GTA: San Andreas was designed around the DualShock 2 controller, which had pressure-sensitive face buttons. On original hardware, the Cross and Square buttons could detect how hard they were being pressed, allowing for more gradual acceleration and braking.
+
+Modern controllers usually place analog acceleration and braking on the trigger buttons instead. When playing the PS2 version through PCSX2 with a modern controller, the original Cross/Square vehicle controls can feel awkward, and depending on the controller or adapter, driving may behave more like the car is always going “pedal to the metal.”
+
+This patch helps preserve the feel and playability of the PS2 version by moving acceleration and braking-style controls to the shoulder/trigger positions used by modern controllers, while keeping the original game ISO untouched.
+
 ## Target Version
 
 This patch is for:
@@ -209,6 +217,15 @@ A good default setup is:
 If you do not want auto-fire behavior, use module 5 instead of module 6.
 
 ## Known Limitations
+
+### Mod Compatibility Notes
+
+This patch has also been tested with **PS2 Project Kaizo 2.2**, which is based on the same NTSC-U 1.03 version of GTA: San Andreas.
+
+Keep in mind that some Project Kaizo shortcuts use the direction buttons. If you are in a vehicle and have the following module enabled:
+
+```text
+2 OPTIONAL - Universal in-vehicle D-pad radio/look controls
 
 ### Menus Are Not Fully Guarded
 
