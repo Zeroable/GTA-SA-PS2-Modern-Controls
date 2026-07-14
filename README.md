@@ -8,12 +8,14 @@ This patch modernizes the PS2 control layout by remapping vehicle acceleration/b
 
 This patch is for:
 
-- Game: **Grand Theft Auto: San Andreas**
-- Platform: **PlayStation 2**
-- Region: **NTSC-U**
-- Game ID: **SLUS-20946**
-- CRC: **399A49CA**
-- Emulator: **PCSX2**
+| Item | Value |
+|---|---|
+| Game | Grand Theft Auto: San Andreas |
+| Platform | PlayStation 2 |
+| Region | NTSC-U |
+| Game ID | SLUS-20946 |
+| CRC | 399A49CA |
+| Emulator | PCSX2 |
 
 Other versions, regions, Greatest Hits/3.00 builds, PAL releases, and modified ISOs are not currently supported.
 
@@ -34,81 +36,104 @@ It does:
 - Remap controller inputs while the game is running
 - Provide optional modules that can be enabled or disabled from PCSX2’s cheat menu
 
-## Recommended File
+## Included Versions
 
-Use the one of the two included files:
+Choose one of the included `.pnach` files.
 
-399A49CA_Basic_Cross_and_R2_and_Square_and_L2_Swap_Plus_Remaps.pnach
+| File | Description |
+|---|---|
+| `399A49CA_Basic_Cross_and_R2_and_Square_and_L2_Swap_Plus_Remaps.pnach` | Recommended version. Includes the basic Cross/R2 and Square/L2 vehicle swap plus optional context-specific modules. |
+| `399A49CA_Basic_Cross_and_R2_and_Square_and_L2_Swap_First_Working_Version.pnach` | First working version. Only swaps Cross with R2 and Square with L2 while in a vehicle. Simpler and less invasive. |
 
-or
+## Installation
 
-The first working version that only swaps Cross with R2, and Square with L2 when in any vehicle.
-399A49CA_Basic_Cross_and_R2_and_Square_and_L2_Swap_First_Working_Version.pnach
+1. Download the `.pnach` file you want to use.
+2. Rename the chosen file to:
 
-Place it in your PCSX2 cheats folder.
+```text
+399A49CA.pnach
+```
+
+3. Place it in your PCSX2 `cheats` folder.
 
 Depending on your PCSX2 setup, the cheats folder is usually found in one of these locations:
 
+```text
 Documents\PCSX2\cheats
+```
 
 or inside your portable PCSX2 folder:
 
+```text
 PCSX2\cheats
+```
 
-Then enable cheats in PCSX2.
+4. Start GTA: San Andreas.
+5. In PCSX2, enable cheats.
+6. Open the cheats list and enable the modules you want.
 
-Installation
-Download the .pnach file.
-Rename it to:
-399A49CA.pnach
-Place it in your PCSX2 cheats folder.
-Start GTA: San Andreas.
-In PCSX2, enable cheats.
-Open the cheats list and enable the modules you want.
-Cheat Modules
-1 REQUIRED - Basic vehicle swap core
+## Cheat Modules
+
+The following modules apply to the recommended “Plus Remaps” version.
+
+### 1 REQUIRED - Basic Vehicle Swap Core
 
 This module is required for the optional modules to work.
 
 In vehicles, it applies the basic modern-style swap:
 
-Physical R2 -> native Cross
-Physical L2 -> native Square
-Physical Cross -> native R2
+```text
+Physical R2     -> native Cross
+Physical L2     -> native Square
+Physical Cross  -> native R2
 Physical Square -> native L2
+```
 
 This makes R2/L2 behave more like modern accelerate/brake controls.
 
 Leave this enabled while playing.
 
-2 OPTIONAL - Universal in-vehicle D-pad radio/look controls
+---
+
+### 2 OPTIONAL - Universal In-Vehicle D-pad Radio/Look Controls
 
 Applies to vehicles, including the Rhino.
 
+```text
 Physical D-pad Up    -> native D-pad Down / next radio station
 Physical D-pad Left  -> native L2 / look left
 Physical D-pad Right -> native R2 / look right
 Physical D-pad Down  -> native L2 + native R2 / look backward
-3 OPTIONAL - Bicycle special controls
+```
+
+---
+
+### 3 OPTIONAL - Bicycle Special Controls
 
 Applies to:
 
+```text
 BMX
 Bike
 Mountain Bike
+```
 
 Behavior:
 
+```text
 Physical R2 -> native Cross
 Physical L2 -> native Square
 Physical Cross still works
 Physical Square still works
+```
 
 This keeps bicycles usable while moving acceleration/braking behavior toward the shoulder buttons.
 
 Enable module 2 separately if you want the universal D-pad look/radio behavior.
 
-4 OPTIONAL - Aircraft special controls
+---
+
+### 4 OPTIONAL - Aircraft Special Controls
 
 Applies to aircraft and helicopters.
 
@@ -116,60 +141,78 @@ This module remaps aircraft controls so shoulder and face-button behavior is mor
 
 General behavior:
 
+```text
 Physical Square -> native L1
 Physical Cross  -> native R1
 Physical R2     -> native Cross
 Physical L2     -> native Square
 Physical R1     -> native R2
 Physical L1     -> native L2
-5 OPTIONAL - Alternate car/motorcycle controls - No Auto Fire
+```
+
+---
+
+### 5 OPTIONAL - Alternate Car/Motorcycle Controls - No Auto Fire
 
 Applies to cars, motorcycles, boats, and other non-bicycle/non-aircraft/non-Rhino vehicles.
 
 This changes the control layout more aggressively than the basic swap.
 
-Do not enable this at the same time as module 6 unless you intentionally want module 6 to win.
+Do **not** enable this at the same time as module 6 unless you intentionally want module 6 to win.
 
-6 OPTIONAL - Alternate car/motorcycle controls - With Auto Fire
+---
+
+### 6 OPTIONAL - Alternate Car/Motorcycle Controls - With Auto Fire
 
 Same idea as module 5, but adds auto-fire style behavior.
 
 Useful for drive-by style behavior where a shoulder button can output a weapon/fire combo.
 
-Do not enable this at the same time as module 5 unless you intentionally want this module to win.
+Do **not** enable this at the same time as module 5 unless you intentionally want this module to win.
 
-7 OPTIONAL - On-foot shoulder swap
+---
+
+### 7 OPTIONAL - On-Foot Shoulder Swap
 
 This module changes only on-foot shoulder behavior.
 
 Current behavior:
 
+```text
 Physical L1 -> native L2
 Physical R1 -> native R2
 Physical L2 -> native L1
 Physical R2 -> native R1
+```
 
 The older D-pad remaps were removed from this version.
 
-Suggested Setup
+## Suggested Setup
 
 A good default setup is:
 
-Enabled:
+### Enabled
+
+```text
 1 REQUIRED - Basic vehicle swap core
 2 OPTIONAL - Universal in-vehicle D-pad radio/look controls
 3 OPTIONAL - Bicycle special controls
 4 OPTIONAL - Aircraft special controls
 6 OPTIONAL - Alternate car/motorcycle controls - With Auto Fire
 7 OPTIONAL - On-foot shoulder swap
+```
 
-Disabled:
+### Disabled
+
+```text
 5 OPTIONAL - Alternate car/motorcycle controls - No Auto Fire
+```
 
 If you do not want auto-fire behavior, use module 5 instead of module 6.
 
-Known Limitations
-Menus are not fully guarded
+## Known Limitations
+
+### Menus Are Not Fully Guarded
 
 This version is based on the most stable gameplay build.
 
@@ -177,13 +220,15 @@ Some menu screens may still receive remapped inputs, especially if shoulder butt
 
 Menu-safe experimental builds were tested, but they could cause side effects such as:
 
-temporary control dropouts while driving
-delayed remap activation after entering a vehicle
-brake-light/controller-state flicker
+```text
+Temporary control dropouts while driving
+Delayed remap activation after entering a vehicle
+Brake-light/controller-state flicker
+```
 
 Because of that, the stable release does not include the experimental menu guard.
 
-PCSX2 only
+### PCSX2 Only
 
 This release is currently intended for PCSX2.
 
@@ -191,54 +236,62 @@ Real PS2 hardware / OPL / PS2RD support is not confirmed.
 
 A real-hardware version may be possible later, but it should be considered experimental unless tested on actual PS2 hardware.
 
-Version-specific
+### Version-Specific
 
 This patch is built for:
 
+```text
 SLUS-20946
 CRC 399A49CA
+```
 
 It will not automatically work on other regions or revisions.
 
-Troubleshooting
-The cheat does not appear in PCSX2
+## Troubleshooting
+
+### The Cheat Does Not Appear in PCSX2
 
 Make sure the file is named exactly:
 
+```text
 399A49CA.pnach
+```
 
-and that it is in the PCSX2 cheats folder.
+and that it is in the PCSX2 `cheats` folder.
 
 Also make sure cheats are enabled in PCSX2.
 
-The controls do not change
+### The Controls Do Not Change
 
 Check that module 1 is enabled.
 
 Most optional modules depend on the required core module.
 
-Two modules conflict
+### Two Modules Conflict
 
 Do not enable both alternate car/motorcycle modules unless you intentionally want the later one to override the earlier one.
 
 Recommended:
 
+```text
 Use either module 5 or module 6, not both.
-Menus behave oddly
+```
+
+### Menus Behave Oddly
 
 This can happen because this patch prioritizes stable gameplay controls over menu-specific guarding.
 
 Disable optional modules temporarily if a menu screen becomes difficult to use.
 
-Credits
+## Credits
 
-Controls design, testing, and project release by Zeroable.
+Controls design, testing, and project release by **Zeroable**.
 
-Patch assembly/debugging assistance from ChatGPT.
+Patch assembly/debugging assistance from **ChatGPT**.
 
-Portions of the controller hook structure were generated with PS2 Controller Remapper by pelvicthrustman.
+Portions of the controller hook structure were generated with **PS2 Controller Remapper by pelvicthrustman**.
 
-Disclaimer
+## Disclaimer
 
 This is an unofficial fan-made controls/accessibility/preservation patch.
 
@@ -248,13 +301,8 @@ Grand Theft Auto: San Andreas is property of Rockstar Games / Take-Two Interacti
 
 This repository does not contain any game files, game assets, disc images, BIOS files, or copyrighted Rockstar/Take-Two content.
 
-License
+## License
 
 This project is released under the MIT License.
 
-See LICENSE for details.
-
-Credits:
-Controls design, testing, and release by Zeroable.
-Patch assembly/debugging assistance from ChatGPT.
-Portions of the controller hook structure were generated with PS2 Controller Remapper by pelvicthrustman.
+See `LICENSE` for details.
