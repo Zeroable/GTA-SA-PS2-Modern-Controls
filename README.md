@@ -218,7 +218,7 @@ If you do not want auto-fire behavior, use module 5 instead of module 6.
 
 ## Known Limitations
 
-### Mod Compatibility Notes
+## Mod Compatibility Notes
 
 This patch has also been tested with **PS2 Project Kaizo 2.2**, which is based on the same NTSC-U 1.03 version of GTA: San Andreas.
 
@@ -226,22 +226,7 @@ Keep in mind that some Project Kaizo shortcuts use the direction buttons. If you
 
 ```text
 2 OPTIONAL - Universal in-vehicle D-pad radio/look controls
-
-### Menus Are Not Fully Guarded
-
-This version is based on the most stable gameplay build.
-
-Some menu screens may still receive remapped inputs, especially if shoulder buttons are used for menu navigation, zoom, or page switching.
-
-Menu-safe experimental builds were tested, but they could cause side effects such as:
-
-```text
-Temporary control dropouts while driving
-Delayed remap activation after entering a vehicle
-Brake-light/controller-state flicker
 ```
-
-Because of that, the stable release does not include the experimental menu guard.
 
 ### PCSX2 Only
 
