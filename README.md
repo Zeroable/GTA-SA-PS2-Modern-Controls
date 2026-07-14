@@ -185,8 +185,6 @@ Physical L2 -> native L1
 Physical R2 -> native R1
 ```
 
-The older D-pad remaps were removed from this version.
-
 ## Suggested Setup
 
 A good default setup is:
