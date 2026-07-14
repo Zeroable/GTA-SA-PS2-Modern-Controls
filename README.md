@@ -220,13 +220,26 @@ If you do not want auto-fire behavior, use module 5 instead of module 6.
 
 ## Mod Compatibility Notes
 
-This patch has also been tested with **PS2 Project Kaizo 2.2**, which is based on the same NTSC-U 1.03 version of GTA: San Andreas.
+This patch has also been tested with **PS2 Project Kaizo 2.2**, which is based on the same NTSC-U 1.03 version of *GTA: San Andreas*.
 
-Keep in mind that some Project Kaizo shortcuts use the direction buttons. If you are in a vehicle and have the following module enabled:
+Keep in mind that some Project Kaizo shortcuts use the direction buttons. If you are in a vehicle and have **Option 2 - Universal In-Vehicle D-pad Radio/Look Controls** enabled, the D-pad does not behave exactly like stock while driving.
 
-```text
-2 OPTIONAL - Universal in-vehicle D-pad radio/look controls
-```
+With option 2 enabled, the following inputs are changed while in a vehicle:
+
+- D-pad Left also sends the vehicle look-left input.
+- D-pad Right also sends the vehicle look-right input.
+- D-pad Down sends both look-left and look-right for rear view.
+- D-pad Up is changed for radio station behavior.
+
+Because of this, Project Kaizo shortcuts that rely on the direction buttons may not work correctly while you are in a vehicle.
+
+Workarounds:
+
+- Turn off option 2.
+- Get out of the vehicle before using the shortcut.
+- Use the shortcut while on foot.
+
+This is not a bug with PS2 Project Kaizo or the base patch. It is a side effect of combining Project Kaizo’s D-pad shortcuts with this patch’s optional in-vehicle D-pad remaps.
 
 ### PCSX2 Only
 
