@@ -1,0 +1,52 @@
+gametitle=Grand Theft Auto: San Andreas (NTSC-U SLUS-20946 / CRC 399A49CA)
+comment=Vehicle-only PS2 Controller Remapper hook attempt.
+comment=Based on PS2 Controller Remapper output plus vehicle gate using 0x0066BB48.
+comment=Target: original NTSC-U SLUS-209.46, CRC 399A49CA.
+
+[Cheats\Vehicle-only R2-L2 driving remap]
+description=On foot: stock controls. In vehicle: R2/RT -> Cross gas, L2/LT -> Square brake/reverse.
+author=Zeroable + PS2 Controller Remapper by pelvicthrustman + ChatGPT assembly/debugging
+
+// Code cave from PS2 Controller Remapper.
+patch=1,EE,200FD050,extended,00C0C821
+patch=1,EE,200FD054,extended,0814C975
+patch=1,EE,200FD058,extended,24030070
+patch=1,EE,200FD05C,extended,87240002
+patch=1,EE,200FD060,extended,30853CFF
+patch=1,EE,200FD064,extended,93260012
+patch=1,EE,200FD068,extended,93270013
+patch=1,EE,200FD06C,extended,9328000F
+patch=1,EE,200FD070,extended,9329000E
+patch=1,EE,200FD074,extended,30810100
+patch=1,EE,200FD078,extended,34A38000
+patch=1,EE,200FD07C,extended,0061280B
+patch=1,EE,200FD080,extended,A326000F
+patch=1,EE,200FD084,extended,30810200
+patch=1,EE,200FD088,extended,34A34000
+patch=1,EE,200FD08C,extended,0061280B
+patch=1,EE,200FD090,extended,A327000E
+patch=1,EE,200FD094,extended,30818000
+patch=1,EE,200FD098,extended,34A30100
+patch=1,EE,200FD09C,extended,0061280B
+patch=1,EE,200FD0A0,extended,A3280012
+patch=1,EE,200FD0A4,extended,30814000
+patch=1,EE,200FD0A8,extended,34A30200
+patch=1,EE,200FD0AC,extended,0061280B
+patch=1,EE,200FD0B0,extended,A3290013
+patch=1,EE,200FD0B4,extended,03E00008
+patch=1,EE,200FD0B8,extended,A7250002
+
+// Vehicle gate.
+// 0x0066BB48 = current car pointer. Test high halfword at 0x0066BB4A.
+// If nonzero: install remapper hook jumps.
+// If zero: restore original game instructions.
+
+// IN VEHICLE: if 16-bit value at 0x0066BB4A != 0, run next 2 patch commands.
+patch=1,EE,D066BB4A,extended,02100000
+patch=1,EE,205325CC,extended,0803F414
+patch=1,EE,20532674,extended,0803F417
+
+// ON FOOT: if 16-bit value at 0x0066BB4A == 0, run next 2 patch commands.
+patch=1,EE,D066BB4A,extended,02000000
+patch=1,EE,205325CC,extended,24030070
+patch=1,EE,20532674,extended,03E00008
