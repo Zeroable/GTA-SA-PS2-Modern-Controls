@@ -1,0 +1,602 @@
+gametitle=Grand Theft Auto: San Andreas (NTSC-U SLUS-20946 / CRC 399A49CA)
+comment=Modular modern controls patch for PCSX2.
+comment=Enable group 1 first. Optional modules can be toggled during play; leave group 1 enabled while the game is running.
+comment=Group 2 is the universal in-vehicle D-pad/look/radio module.
+comment=Group 5 enables alternate controls for cars and normal ground vehicles.
+comment=Group 6 extends group 5 alternate controls to motorcycles and ATV.
+comment=Group 7 extends group 5 alternate controls to boats and hovercraft.
+comment=Group 8 is an Auto Fire add-on for group 5.
+comment=Turreted or weaponized vehicles 407, 430, 432, 544, 564, and 601 are excluded from alternate vehicle controls so their vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+comment=Target: original NTSC-U SLUS-209.46, CRC 399A49CA.
+comment=Public credit: Zeroable.
+
+[Cheats\1 REQUIRED - Basic vehicle swap core]
+description=Required core. On foot stays stock unless group 7 is enabled. In vehicles, installs the controller hook and applies the basic R2/Cross and L2/Square vehicle swap. Optional groups depend on this being enabled.
+author=Zeroable + PS2 Controller Remapper by pelvicthrustman + ChatGPT assembly/debugging
+
+// Shared hook entry from PS2 Controller Remapper.
+patch=1,EE,200FD050,extended,00C0C821
+patch=1,EE,200FD054,extended,0814C975
+patch=1,EE,200FD058,extended,24030070
+
+// Normal vehicle body. Full swap: R2 <-> Cross and L2 <-> Square. Ends at FD900 postprocessor.
+patch=1,EE,200FD05C,extended,87240002
+patch=1,EE,200FD060,extended,30853CFF
+patch=1,EE,200FD064,extended,93260012
+patch=1,EE,200FD068,extended,93270013
+patch=1,EE,200FD06C,extended,9328000F
+patch=1,EE,200FD070,extended,9329000E
+patch=1,EE,200FD074,extended,30810100
+patch=1,EE,200FD078,extended,34A38000
+patch=1,EE,200FD07C,extended,0061280B
+patch=1,EE,200FD080,extended,A326000F
+patch=1,EE,200FD084,extended,30810200
+patch=1,EE,200FD088,extended,34A34000
+patch=1,EE,200FD08C,extended,0061280B
+patch=1,EE,200FD090,extended,A327000E
+patch=1,EE,200FD094,extended,30818000
+patch=1,EE,200FD098,extended,34A30100
+patch=1,EE,200FD09C,extended,0061280B
+patch=1,EE,200FD0A0,extended,A3280012
+patch=1,EE,200FD0A4,extended,30814000
+patch=1,EE,200FD0A8,extended,34A30200
+patch=1,EE,200FD0AC,extended,0061280B
+patch=1,EE,200FD0B0,extended,A3290013
+patch=1,EE,200FD0B4,extended,0803F640
+patch=1,EE,200FD0B8,extended,A7250002
+
+// Modular chooser stage 1. Core default: continue to stage 2. Bicycle add-on overwrites this block.
+patch=1,EE,200FD120,extended,0803F45C
+patch=1,EE,200FD124,extended,00000000
+
+// Modular chooser stage 2. Core default: continue to stage 3. Aircraft add-on overwrites this block.
+patch=1,EE,200FD170,extended,0803F4B0
+patch=1,EE,200FD174,extended,00000000
+
+// Modular chooser stage 3. Core default: normal vehicle body. Alternate car/motorcycle add-ons overwrite this block.
+patch=1,EE,200FD2C0,extended,0803F417
+patch=1,EE,200FD2C4,extended,00000000
+
+// Default postprocessor at FD900. Core behavior: return immediately. Group 2 overwrites this.
+patch=1,EE,200FD900,extended,03E00008
+patch=1,EE,200FD904,extended,00000000
+
+// Dynamic hook install/restore.
+patch=1,EE,D066BB4A,extended,02100000
+patch=1,EE,205325CC,extended,0803F414
+patch=1,EE,20532674,extended,0803F448
+
+patch=1,EE,D066BB4A,extended,02000000
+patch=1,EE,205325CC,extended,24030070
+patch=1,EE,20532674,extended,03E00008
+
+[Cheats\2 OPTIONAL - Universal in-vehicle D-pad radio/look controls]
+description=Requires group 1. All vehicles including Rhino: D-pad Up=next radio station/native D-pad Down, D-pad Left=look left/native L2, D-pad Right=look right/native R2, D-pad Down=look back/native L2+R2. This single module controls the in-vehicle D-pad/look/radio behavior.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Universal in-vehicle D-pad/look/radio postprocessor.
+patch=1,EE,200FD900,extended,87240002
+patch=1,EE,200FD904,extended,348500F0
+patch=1,EE,200FD908,extended,9326000A
+patch=1,EE,200FD90C,extended,93270009
+patch=1,EE,200FD910,extended,93280008
+patch=1,EE,200FD914,extended,9329000B
+patch=1,EE,200FD918,extended,240A0000
+patch=1,EE,200FD91C,extended,932B0012
+patch=1,EE,200FD920,extended,932C0013
+patch=1,EE,200FD924,extended,240D0000
+patch=1,EE,200FD928,extended,30810010
+patch=1,EE,200FD92C,extended,30A3FFBF
+patch=1,EE,200FD930,extended,0061280A
+patch=1,EE,200FD934,extended,00C1500A
+patch=1,EE,200FD938,extended,30810080
+patch=1,EE,200FD93C,extended,30A3FEFF
+patch=1,EE,200FD940,extended,0061280A
+patch=1,EE,200FD944,extended,00E1580A
+patch=1,EE,200FD948,extended,30810020
+patch=1,EE,200FD94C,extended,30A3FDFF
+patch=1,EE,200FD950,extended,0061280A
+patch=1,EE,200FD954,extended,0101600A
+patch=1,EE,200FD958,extended,30810040
+patch=1,EE,200FD95C,extended,30A3FCFF
+patch=1,EE,200FD960,extended,0061280A
+patch=1,EE,200FD964,extended,0121580A
+patch=1,EE,200FD968,extended,0121600A
+patch=1,EE,200FD96C,extended,A32D0008
+patch=1,EE,200FD970,extended,A32D0009
+patch=1,EE,200FD974,extended,A32D000A
+patch=1,EE,200FD978,extended,A32A000B
+patch=1,EE,200FD97C,extended,A32B0012
+patch=1,EE,200FD980,extended,A32C0013
+patch=1,EE,200FD984,extended,03E00008
+patch=1,EE,200FD988,extended,A7250002
+
+[Cheats\3 OPTIONAL - Bicycle special controls]
+description=Requires group 1. BMX/Bike/Mountain Bike only: R2 mirrors Cross, L2 mirrors Square, Cross/Square still work. D-pad look/radio functions are not included here; enable group 2 for those.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Bicycle stage-1 chooser. Bike IDs: 481 BMX, 509 Bike, 510 Mountain Bike. If not a bike, continue to stage 2.
+patch=1,EE,200FD120,extended,3C080067
+patch=1,EE,200FD124,extended,8D08BB48
+patch=1,EE,200FD128,extended,85090022
+patch=1,EE,200FD12C,extended,240A01E1
+patch=1,EE,200FD130,extended,112A0073
+patch=1,EE,200FD134,extended,00000000
+patch=1,EE,200FD138,extended,240A01FD
+patch=1,EE,200FD13C,extended,112A0070
+patch=1,EE,200FD140,extended,00000000
+patch=1,EE,200FD144,extended,240A01FE
+patch=1,EE,200FD148,extended,112A006D
+patch=1,EE,200FD14C,extended,00000000
+patch=1,EE,200FD150,extended,0803F45C
+patch=1,EE,200FD154,extended,00000000
+
+// Bicycle-special body, no D-pad behavior.
+patch=1,EE,200FD300,extended,87240002
+patch=1,EE,200FD304,extended,34850300
+patch=1,EE,200FD308,extended,93260012
+patch=1,EE,200FD30C,extended,93270013
+patch=1,EE,200FD310,extended,9328000F
+patch=1,EE,200FD314,extended,9329000E
+patch=1,EE,200FD318,extended,240A0000
+patch=1,EE,200FD31C,extended,240B0000
+patch=1,EE,200FD320,extended,30810200
+patch=1,EE,200FD324,extended,30A3BFFF
+patch=1,EE,200FD328,extended,0061280A
+patch=1,EE,200FD32C,extended,00E1480A
+patch=1,EE,200FD330,extended,30810100
+patch=1,EE,200FD334,extended,30A37FFF
+patch=1,EE,200FD338,extended,0061280A
+patch=1,EE,200FD33C,extended,00C1400A
+patch=1,EE,200FD340,extended,A329000E
+patch=1,EE,200FD344,extended,A328000F
+patch=1,EE,200FD348,extended,A32A0012
+patch=1,EE,200FD34C,extended,A32B0013
+patch=1,EE,200FD350,extended,0803F640
+patch=1,EE,200FD354,extended,A7250002
+
+[Cheats\4 OPTIONAL - Aircraft special controls]
+description=Requires group 1. Aircraft only: native L1->Square, native R1->Cross, native Cross->R2, native Square->L2, native R2->R1, native L2->L1. Enable group 2 separately for D-pad look/radio.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Aircraft stage-2 chooser. If not aircraft, continue to stage 3.
+patch=1,EE,200FD170,extended,3C080067
+patch=1,EE,200FD174,extended,8D08BB48
+patch=1,EE,200FD178,extended,85090022
+patch=1,EE,200FD17C,extended,240A01A9
+patch=1,EE,200FD180,extended,112A009F
+patch=1,EE,200FD184,extended,00000000
+patch=1,EE,200FD188,extended,240A01BF
+patch=1,EE,200FD18C,extended,112A009C
+patch=1,EE,200FD190,extended,00000000
+patch=1,EE,200FD194,extended,240A01CC
+patch=1,EE,200FD198,extended,112A0099
+patch=1,EE,200FD19C,extended,00000000
+patch=1,EE,200FD1A0,extended,240A01D0
+patch=1,EE,200FD1A4,extended,112A0096
+patch=1,EE,200FD1A8,extended,00000000
+patch=1,EE,200FD1AC,extended,240A01D1
+patch=1,EE,200FD1B0,extended,112A0093
+patch=1,EE,200FD1B4,extended,00000000
+patch=1,EE,200FD1B8,extended,240A01D5
+patch=1,EE,200FD1BC,extended,112A0090
+patch=1,EE,200FD1C0,extended,00000000
+patch=1,EE,200FD1C4,extended,240A01DC
+patch=1,EE,200FD1C8,extended,112A008D
+patch=1,EE,200FD1CC,extended,00000000
+patch=1,EE,200FD1D0,extended,240A01E7
+patch=1,EE,200FD1D4,extended,112A008A
+patch=1,EE,200FD1D8,extended,00000000
+patch=1,EE,200FD1DC,extended,240A01E8
+patch=1,EE,200FD1E0,extended,112A0087
+patch=1,EE,200FD1E4,extended,00000000
+patch=1,EE,200FD1E8,extended,240A01F1
+patch=1,EE,200FD1EC,extended,112A0084
+patch=1,EE,200FD1F0,extended,00000000
+patch=1,EE,200FD1F4,extended,240A01F5
+patch=1,EE,200FD1F8,extended,112A0081
+patch=1,EE,200FD1FC,extended,00000000
+patch=1,EE,200FD200,extended,240A01FF
+patch=1,EE,200FD204,extended,112A007E
+patch=1,EE,200FD208,extended,00000000
+patch=1,EE,200FD20C,extended,240A0200
+patch=1,EE,200FD210,extended,112A007B
+patch=1,EE,200FD214,extended,00000000
+patch=1,EE,200FD218,extended,240A0201
+patch=1,EE,200FD21C,extended,112A0078
+patch=1,EE,200FD220,extended,00000000
+patch=1,EE,200FD224,extended,240A0207
+patch=1,EE,200FD228,extended,112A0075
+patch=1,EE,200FD22C,extended,00000000
+patch=1,EE,200FD230,extended,240A0208
+patch=1,EE,200FD234,extended,112A0072
+patch=1,EE,200FD238,extended,00000000
+patch=1,EE,200FD23C,extended,240A0224
+patch=1,EE,200FD240,extended,112A006F
+patch=1,EE,200FD244,extended,00000000
+patch=1,EE,200FD248,extended,240A0229
+patch=1,EE,200FD24C,extended,112A006C
+patch=1,EE,200FD250,extended,00000000
+patch=1,EE,200FD254,extended,240A0233
+patch=1,EE,200FD258,extended,112A0069
+patch=1,EE,200FD25C,extended,00000000
+patch=1,EE,200FD260,extended,240A0241
+patch=1,EE,200FD264,extended,112A0066
+patch=1,EE,200FD268,extended,00000000
+patch=1,EE,200FD26C,extended,240A0250
+patch=1,EE,200FD270,extended,112A0063
+patch=1,EE,200FD274,extended,00000000
+patch=1,EE,200FD278,extended,240A0251
+patch=1,EE,200FD27C,extended,112A0060
+patch=1,EE,200FD280,extended,00000000
+patch=1,EE,200FD284,extended,0803F4B0
+patch=1,EE,200FD288,extended,00000000
+
+// Aircraft-special body.
+patch=1,EE,200FD400,extended,87240002
+patch=1,EE,200FD404,extended,3485CF00
+patch=1,EE,200FD408,extended,93260012
+patch=1,EE,200FD40C,extended,93270013
+patch=1,EE,200FD410,extended,93280010
+patch=1,EE,200FD414,extended,93290011
+patch=1,EE,200FD418,extended,932A000E
+patch=1,EE,200FD41C,extended,932B000F
+patch=1,EE,200FD420,extended,240C0000
+patch=1,EE,200FD424,extended,240D0000
+patch=1,EE,200FD428,extended,240E0000
+patch=1,EE,200FD42C,extended,240F0000
+patch=1,EE,200FD430,extended,30810200
+patch=1,EE,200FD434,extended,30A3BFFF
+patch=1,EE,200FD438,extended,0061280A
+patch=1,EE,200FD43C,extended,00E1600A
+patch=1,EE,200FD440,extended,30810100
+patch=1,EE,200FD444,extended,30A37FFF
+patch=1,EE,200FD448,extended,0061280A
+patch=1,EE,200FD44C,extended,00C1680A
+patch=1,EE,200FD450,extended,30818000
+patch=1,EE,200FD454,extended,30A3FBFF
+patch=1,EE,200FD458,extended,0061280A
+patch=1,EE,200FD45C,extended,0161700A
+patch=1,EE,200FD460,extended,30814000
+patch=1,EE,200FD464,extended,30A3F7FF
+patch=1,EE,200FD468,extended,0061280A
+patch=1,EE,200FD46C,extended,0141780A
+patch=1,EE,200FD470,extended,24060000
+patch=1,EE,200FD474,extended,24070000
+patch=1,EE,200FD478,extended,30810400
+patch=1,EE,200FD47C,extended,30A3FEFF
+patch=1,EE,200FD480,extended,0061280A
+patch=1,EE,200FD484,extended,0101300A
+patch=1,EE,200FD488,extended,30810800
+patch=1,EE,200FD48C,extended,30A3FDFF
+patch=1,EE,200FD490,extended,0061280A
+patch=1,EE,200FD494,extended,0121380A
+patch=1,EE,200FD498,extended,A32C000E
+patch=1,EE,200FD49C,extended,A32D000F
+patch=1,EE,200FD4A0,extended,A32E0010
+patch=1,EE,200FD4A4,extended,A32F0011
+patch=1,EE,200FD4A8,extended,A3260012
+patch=1,EE,200FD4AC,extended,A3270013
+patch=1,EE,200FD4B0,extended,0803F640
+patch=1,EE,200FD4B4,extended,A7250002
+
+[Cheats\5 OPTIONAL - Alternate controls for cars and normal ground vehicles]
+description=Requires group 1. Enables the alternate vehicle layout for cars and normal ground vehicles. Motorcycles/ATV and boats/hovercraft use the basic vehicle layout unless groups 6 and/or 7 are enabled. Turreted or weaponized vehicles 407, 430, 432, 544, 564, and 601 are excluded so their vehicle weapon and secondary-fire controls stay closer to the stock/basic layout. Enable group 2 separately for D-pad look/radio.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Stage-3 entry for alternate vehicle controls.
+// This routes vehicle model IDs through the category chooser at FDA00.
+patch=1,EE,200FD2C0,extended,0803F680
+patch=1,EE,200FD2C4,extended,00000000
+
+// Alternate-control dispatcher.
+// Group 5 defaults to the non-Auto-Fire alternate body.
+// Group 8 changes this dispatcher to the Auto Fire alternate body.
+patch=1,EE,200FD4E0,extended,0803F540
+patch=1,EE,200FD4E4,extended,00000000
+
+// Motorcycle/ATV gate.
+// Group 6 changes this gate to the alternate-control dispatcher.
+patch=1,EE,200FDB80,extended,0803F417
+patch=1,EE,200FDB84,extended,00000000
+
+// Boat/hovercraft gate.
+// Group 7 changes this gate to the alternate-control dispatcher.
+patch=1,EE,200FDB90,extended,0803F417
+patch=1,EE,200FDB94,extended,00000000
+
+// Vehicle category chooser.
+// Reads current vehicle model ID from [0x0066BB48] + 0x22.
+patch=1,EE,200FDA00,extended,3C080067
+patch=1,EE,200FDA04,extended,8D08BB48
+patch=1,EE,200FDA08,extended,85090022
+// Excluded turret/weapon vehicle: 407 Fire Truck. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA0C,extended,240A0197
+patch=1,EE,200FDA10,extended,112AFD92
+patch=1,EE,200FDA14,extended,00000000
+// Excluded turret/weapon vehicle: 430 Predator. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA18,extended,240A01AE
+patch=1,EE,200FDA1C,extended,112AFD8F
+patch=1,EE,200FDA20,extended,00000000
+// Excluded turret/weapon vehicle: 432 Rhino. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA24,extended,240A01B0
+patch=1,EE,200FDA28,extended,112AFD8C
+patch=1,EE,200FDA2C,extended,00000000
+// Excluded turret/weapon vehicle: 544 Fire Truck ladder variant. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA30,extended,240A0220
+patch=1,EE,200FDA34,extended,112AFD89
+patch=1,EE,200FDA38,extended,00000000
+// Excluded turret/weapon vehicle: 564 RC Tiger. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA3C,extended,240A0234
+patch=1,EE,200FDA40,extended,112AFD86
+patch=1,EE,200FDA44,extended,00000000
+// Excluded turret/weapon vehicle: 601 S.W.A.T.. Alternate controls are skipped so vehicle weapon and secondary-fire controls stay closer to the stock/basic layout.
+patch=1,EE,200FDA48,extended,240A0259
+patch=1,EE,200FDA4C,extended,112AFD83
+patch=1,EE,200FDA50,extended,00000000
+// Motorcycle/ATV option check: 448 Pizzaboy.
+patch=1,EE,200FDA54,extended,240A01C0
+patch=1,EE,200FDA58,extended,112A0049
+patch=1,EE,200FDA5C,extended,00000000
+// Motorcycle/ATV option check: 461 PCJ-600.
+patch=1,EE,200FDA60,extended,240A01CD
+patch=1,EE,200FDA64,extended,112A0046
+patch=1,EE,200FDA68,extended,00000000
+// Motorcycle/ATV option check: 462 Faggio.
+patch=1,EE,200FDA6C,extended,240A01CE
+patch=1,EE,200FDA70,extended,112A0043
+patch=1,EE,200FDA74,extended,00000000
+// Motorcycle/ATV option check: 463 Freeway.
+patch=1,EE,200FDA78,extended,240A01CF
+patch=1,EE,200FDA7C,extended,112A0040
+patch=1,EE,200FDA80,extended,00000000
+// Motorcycle/ATV option check: 468 Sanchez.
+patch=1,EE,200FDA84,extended,240A01D4
+patch=1,EE,200FDA88,extended,112A003D
+patch=1,EE,200FDA8C,extended,00000000
+// Motorcycle/ATV option check: 471 Quad / ATV.
+patch=1,EE,200FDA90,extended,240A01D7
+patch=1,EE,200FDA94,extended,112A003A
+patch=1,EE,200FDA98,extended,00000000
+// Motorcycle/ATV option check: 521 FCR-900.
+patch=1,EE,200FDA9C,extended,240A0209
+patch=1,EE,200FDAA0,extended,112A0037
+patch=1,EE,200FDAA4,extended,00000000
+// Motorcycle/ATV option check: 522 NRG-500.
+patch=1,EE,200FDAA8,extended,240A020A
+patch=1,EE,200FDAAC,extended,112A0034
+patch=1,EE,200FDAB0,extended,00000000
+// Motorcycle/ATV option check: 523 HPV1000.
+patch=1,EE,200FDAB4,extended,240A020B
+patch=1,EE,200FDAB8,extended,112A0031
+patch=1,EE,200FDABC,extended,00000000
+// Motorcycle/ATV option check: 581 BF-400.
+patch=1,EE,200FDAC0,extended,240A0245
+patch=1,EE,200FDAC4,extended,112A002E
+patch=1,EE,200FDAC8,extended,00000000
+// Motorcycle/ATV option check: 586 Wayfarer.
+patch=1,EE,200FDACC,extended,240A024A
+patch=1,EE,200FDAD0,extended,112A002B
+patch=1,EE,200FDAD4,extended,00000000
+// Boat/hovercraft option check: 446 Squalo.
+patch=1,EE,200FDAD8,extended,240A01BE
+patch=1,EE,200FDADC,extended,112A002C
+patch=1,EE,200FDAE0,extended,00000000
+// Boat/hovercraft option check: 452 Speeder.
+patch=1,EE,200FDAE4,extended,240A01C4
+patch=1,EE,200FDAE8,extended,112A0029
+patch=1,EE,200FDAEC,extended,00000000
+// Boat/hovercraft option check: 453 Reefer.
+patch=1,EE,200FDAF0,extended,240A01C5
+patch=1,EE,200FDAF4,extended,112A0026
+patch=1,EE,200FDAF8,extended,00000000
+// Boat/hovercraft option check: 454 Tropic.
+patch=1,EE,200FDAFC,extended,240A01C6
+patch=1,EE,200FDB00,extended,112A0023
+patch=1,EE,200FDB04,extended,00000000
+// Boat/hovercraft option check: 472 Coastguard.
+patch=1,EE,200FDB08,extended,240A01D8
+patch=1,EE,200FDB0C,extended,112A0020
+patch=1,EE,200FDB10,extended,00000000
+// Boat/hovercraft option check: 473 Dinghy.
+patch=1,EE,200FDB14,extended,240A01D9
+patch=1,EE,200FDB18,extended,112A001D
+patch=1,EE,200FDB1C,extended,00000000
+// Boat/hovercraft option check: 484 Marquis.
+patch=1,EE,200FDB20,extended,240A01E4
+patch=1,EE,200FDB24,extended,112A001A
+patch=1,EE,200FDB28,extended,00000000
+// Boat/hovercraft option check: 493 Jetmax.
+patch=1,EE,200FDB2C,extended,240A01ED
+patch=1,EE,200FDB30,extended,112A0017
+patch=1,EE,200FDB34,extended,00000000
+// Boat/hovercraft option check: 539 Vortex.
+patch=1,EE,200FDB38,extended,240A021B
+patch=1,EE,200FDB3C,extended,112A0014
+patch=1,EE,200FDB40,extended,00000000
+// Boat/hovercraft option check: 595 Launch.
+patch=1,EE,200FDB44,extended,240A0253
+patch=1,EE,200FDB48,extended,112A0011
+patch=1,EE,200FDB4C,extended,00000000
+// Cars and normal ground vehicles use the alternate-control dispatcher.
+patch=1,EE,200FDB50,extended,0803F538
+patch=1,EE,200FDB54,extended,00000000
+
+// Alternate vehicle body without Auto Fire.
+// Physical behavior: Square->native L1, Cross->native R1, R2->native Cross, L2->native Square, R1->native R2, L1->native L2.
+patch=1,EE,200FD500,extended,87240002
+patch=1,EE,200FD504,extended,3485CF00
+patch=1,EE,200FD508,extended,93260012
+patch=1,EE,200FD50C,extended,93270013
+patch=1,EE,200FD510,extended,93280010
+patch=1,EE,200FD514,extended,93290011
+patch=1,EE,200FD518,extended,932A000E
+patch=1,EE,200FD51C,extended,932B000F
+patch=1,EE,200FD520,extended,240C0000
+patch=1,EE,200FD524,extended,240D0000
+patch=1,EE,200FD528,extended,240E0000
+patch=1,EE,200FD52C,extended,240F0000
+patch=1,EE,200FD530,extended,30810200
+patch=1,EE,200FD534,extended,30A3BFFF
+patch=1,EE,200FD538,extended,0061280A
+patch=1,EE,200FD53C,extended,00E1600A
+patch=1,EE,200FD540,extended,30810100
+patch=1,EE,200FD544,extended,30A37FFF
+patch=1,EE,200FD548,extended,0061280A
+patch=1,EE,200FD54C,extended,00C1680A
+patch=1,EE,200FD550,extended,30818000
+patch=1,EE,200FD554,extended,30A3FBFF
+patch=1,EE,200FD558,extended,0061280A
+patch=1,EE,200FD55C,extended,0161700A
+patch=1,EE,200FD560,extended,30814000
+patch=1,EE,200FD564,extended,30A3F7FF
+patch=1,EE,200FD568,extended,0061280A
+patch=1,EE,200FD56C,extended,0141780A
+patch=1,EE,200FD570,extended,24060000
+patch=1,EE,200FD574,extended,24070000
+patch=1,EE,200FD578,extended,30810400
+patch=1,EE,200FD57C,extended,30A3FEFF
+patch=1,EE,200FD580,extended,0061280A
+patch=1,EE,200FD584,extended,0101300A
+patch=1,EE,200FD588,extended,30810800
+patch=1,EE,200FD58C,extended,30A3FDFF
+patch=1,EE,200FD590,extended,0061280A
+patch=1,EE,200FD594,extended,0121380A
+patch=1,EE,200FD598,extended,A32C000E
+patch=1,EE,200FD59C,extended,A32D000F
+patch=1,EE,200FD5A0,extended,A32E0010
+patch=1,EE,200FD5A4,extended,A32F0011
+patch=1,EE,200FD5A8,extended,A3260012
+patch=1,EE,200FD5AC,extended,A3270013
+patch=1,EE,200FD5B0,extended,0803F640
+patch=1,EE,200FD5B4,extended,A7250002
+
+[Cheats\6 OPTIONAL - Include motorcycles and ATV in alternate controls]
+description=Requires groups 1 and 5. Applies group 5 alternate controls to motorcycles and the Quad/ATV. Leave this disabled if you want motorcycles and ATV to keep the basic vehicle layout.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Motorcycle/ATV gate.
+// With this group enabled, motorcycle and ATV model IDs route to the alternate-control dispatcher.
+patch=1,EE,200FDB80,extended,0803F538
+patch=1,EE,200FDB84,extended,00000000
+
+[Cheats\7 OPTIONAL - Include boats and hovercraft in alternate controls]
+description=Requires groups 1 and 5. Applies group 5 alternate controls to boats and the Vortex hovercraft. Predator is excluded with the turreted/weaponized vehicles so its built-in guns stay closer to the stock/basic layout.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Boat/hovercraft gate.
+// With this group enabled, boat and hovercraft model IDs route to the alternate-control dispatcher.
+patch=1,EE,200FDB90,extended,0803F538
+patch=1,EE,200FDB94,extended,00000000
+
+[Cheats\8 OPTIONAL - Auto Fire add-on for alternate controls]
+description=Requires groups 1 and 5. Changes the group 5 alternate-control dispatcher to use the Auto Fire body. R1 outputs native R2+Circle and L1 outputs native L2+Circle for vehicles routed through the alternate-control dispatcher.
+author=Zeroable + ChatGPT assembly/debugging
+
+// Auto Fire dispatcher.
+// With this group enabled, vehicles routed by group 5/6/7 use the Auto Fire alternate body.
+patch=1,EE,200FD4E0,extended,0803F580
+patch=1,EE,200FD4E4,extended,00000000
+
+// Alternate vehicle body with Auto Fire.
+// Physical behavior: Square->native L1, Cross->native R1, R2->native Cross, L2->native Square, R1->native R2+Circle, L1->native L2+Circle.
+patch=1,EE,200FD600,extended,87240002
+patch=1,EE,200FD604,extended,3485CF00
+patch=1,EE,200FD608,extended,93260012
+patch=1,EE,200FD60C,extended,93270013
+patch=1,EE,200FD610,extended,93280010
+patch=1,EE,200FD614,extended,93290011
+patch=1,EE,200FD618,extended,932A000E
+patch=1,EE,200FD61C,extended,932B000F
+patch=1,EE,200FD620,extended,932C000D
+patch=1,EE,200FD624,extended,240D0000
+patch=1,EE,200FD628,extended,240E0000
+patch=1,EE,200FD62C,extended,240F0000
+patch=1,EE,200FD630,extended,30810200
+patch=1,EE,200FD634,extended,30A3BFFF
+patch=1,EE,200FD638,extended,0061280A
+patch=1,EE,200FD63C,extended,00E1680A
+patch=1,EE,200FD640,extended,30810100
+patch=1,EE,200FD644,extended,30A37FFF
+patch=1,EE,200FD648,extended,0061280A
+patch=1,EE,200FD64C,extended,00C1700A
+patch=1,EE,200FD650,extended,30818000
+patch=1,EE,200FD654,extended,30A3FBFF
+patch=1,EE,200FD658,extended,0061280A
+patch=1,EE,200FD65C,extended,0161780A
+patch=1,EE,200FD660,extended,24060000
+patch=1,EE,200FD664,extended,30814000
+patch=1,EE,200FD668,extended,30A3F7FF
+patch=1,EE,200FD66C,extended,0061280A
+patch=1,EE,200FD670,extended,0141300A
+patch=1,EE,200FD674,extended,24070000
+patch=1,EE,200FD678,extended,240A0000
+patch=1,EE,200FD67C,extended,30810400
+patch=1,EE,200FD680,extended,30A3DEFF
+patch=1,EE,200FD684,extended,0061280A
+patch=1,EE,200FD688,extended,0101380A
+patch=1,EE,200FD68C,extended,0101600A
+patch=1,EE,200FD690,extended,30810800
+patch=1,EE,200FD694,extended,30A3DDFF
+patch=1,EE,200FD698,extended,0061280A
+patch=1,EE,200FD69C,extended,0121500A
+patch=1,EE,200FD6A0,extended,0121600A
+patch=1,EE,200FD6A4,extended,A32C000D
+patch=1,EE,200FD6A8,extended,A32D000E
+patch=1,EE,200FD6AC,extended,A32E000F
+patch=1,EE,200FD6B0,extended,A32F0010
+patch=1,EE,200FD6B4,extended,A3260011
+patch=1,EE,200FD6B8,extended,A3270012
+patch=1,EE,200FD6BC,extended,A32A0013
+patch=1,EE,200FD6C0,extended,0803F640
+patch=1,EE,200FD6C4,extended,A7250002
+
+[Cheats\9 OPTIONAL - On-foot shoulder swap]
+description=Requires group 1. On foot only. Shoulder swap: physical L1 outputs native L2; physical R1 outputs native R2; physical L2 outputs native L1; physical R2 outputs native R1.
+author=Zeroable + ChatGPT assembly/debugging
+
+// On-foot override.
+// Group 1 uses stock controls on foot. This optional group keeps the controller hook active while on foot and routes to the on-foot shoulder-swap body.
+patch=1,EE,D066BB4A,extended,02000000
+patch=1,EE,205325CC,extended,0803F414
+patch=1,EE,20532674,extended,0803F600
+
+// On-foot shoulder-swap body.
+// Physical behavior:
+//   physical L1 -> native L2
+//   physical R1 -> native R2
+//   physical L2 -> native L1
+//   physical R2 -> native R1
+// Physical L1/R1/L2/R2 are suppressed first, then remapped to their new native outputs.
+patch=1,EE,200FD800,extended,87240002
+patch=1,EE,200FD804,extended,34850F00
+patch=1,EE,200FD808,extended,93260010
+patch=1,EE,200FD80C,extended,93270011
+patch=1,EE,200FD810,extended,93280012
+patch=1,EE,200FD814,extended,93290013
+patch=1,EE,200FD818,extended,240A0000
+patch=1,EE,200FD81C,extended,240B0000
+patch=1,EE,200FD820,extended,240C0000
+patch=1,EE,200FD824,extended,240D0000
+patch=1,EE,200FD828,extended,30810400
+patch=1,EE,200FD82C,extended,30A3FEFF
+patch=1,EE,200FD830,extended,0061280A
+patch=1,EE,200FD834,extended,00C1600A
+patch=1,EE,200FD838,extended,30810800
+patch=1,EE,200FD83C,extended,30A3FDFF
+patch=1,EE,200FD840,extended,0061280A
+patch=1,EE,200FD844,extended,00E1680A
+patch=1,EE,200FD848,extended,30810100
+patch=1,EE,200FD84C,extended,30A3FBFF
+patch=1,EE,200FD850,extended,0061280A
+patch=1,EE,200FD854,extended,0101500A
+patch=1,EE,200FD858,extended,30810200
+patch=1,EE,200FD85C,extended,30A3F7FF
+patch=1,EE,200FD860,extended,0061280A
+patch=1,EE,200FD864,extended,0121580A
+patch=1,EE,200FD868,extended,A32A0010
+patch=1,EE,200FD86C,extended,A32B0011
+patch=1,EE,200FD870,extended,A32C0012
+patch=1,EE,200FD874,extended,A32D0013
+patch=1,EE,200FD878,extended,03E00008
+patch=1,EE,200FD87C,extended,A7250002
