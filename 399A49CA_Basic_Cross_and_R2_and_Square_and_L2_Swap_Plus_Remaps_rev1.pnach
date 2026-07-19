@@ -11,7 +11,7 @@ comment=Target: original NTSC-U SLUS-209.46, CRC 399A49CA.
 comment=Public credit: Zeroable.
 
 [Cheats\1 REQUIRED - Basic vehicle swap core]
-description=Required core. On foot stays stock unless group 7 is enabled. In vehicles, installs the controller hook and applies the basic R2/Cross and L2/Square vehicle swap. Optional groups depend on this being enabled.
+description=Required core. On foot stays stock unless group 9 is enabled. In vehicles, installs the controller hook and applies the basic R2/Cross and L2/Square vehicle swap. Optional groups depend on this being enabled.
 author=Zeroable + PS2 Controller Remapper by pelvicthrustman + ChatGPT assembly/debugging
 
 // Shared hook entry from PS2 Controller Remapper.
