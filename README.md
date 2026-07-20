@@ -25,7 +25,7 @@ This patch is for:
 | Region | NTSC-U |
 | Game ID | SLUS-20946 |
 | CRC | 399A49CA |
-| Emulator | PCSX2 |
+| Emulators tested | PCSX2, AetherSX2, ARMSX2 |
 
 Other versions, regions, Greatest Hits/3.00 builds, PAL releases, and modified ISOs are not currently supported.
 
