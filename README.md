@@ -238,47 +238,6 @@ Physical L2 -> native L1
 Physical R2 -> native R1
 ```
 
-## Suggested Setup
-
-A good default setup is:
-
-### Enabled
-
-```text
-1 REQUIRED - Basic Vehicle Swap Core
-2 OPTIONAL - Universal In-Vehicle D-pad Radio/Look Controls
-3 OPTIONAL - Bicycle Special Controls
-4 OPTIONAL - Aircraft Special Controls
-5 OPTIONAL - Alternate Controls for Cars and Normal Ground Vehicles
-6 OPTIONAL - Include Motorcycles and ATV in Alternate Controls
-8 OPTIONAL - Auto Fire Add-on for Alternate Controls
-9 OPTIONAL - On-Foot Shoulder Swap
-```
-
-### Optional
-
-```text
-7 OPTIONAL - Include Boats and Hovercraft in Alternate Controls
-```
-
-Boats can feel better with either the basic layout or the alternate layout depending on preference.
-
-### Auto Fire
-
-To use alternate controls without Auto Fire:
-
-```text
-Enable option 5
-Disable option 8
-```
-
-To use alternate controls with Auto Fire:
-
-```text
-Enable option 5
-Enable option 8
-```
-
 ## Known Limitations
 
 ### Menus Are Not Fully Guarded
